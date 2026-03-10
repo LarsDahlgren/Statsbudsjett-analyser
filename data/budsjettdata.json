@@ -1,0 +1,34 @@
+[
+{
+"år": 2024,
+"budsjett_type": "statsbudsjett",
+"departement": "Helse- og omsorgsdepartementet",
+"programområde": "Spesialisthelsetjenester",
+"kapittel": "732",
+"post": "70",
+"navn": "Tilskudd til helseforetak",
+"bevilgning": 21000000000
+},
+
+{
+"år": 2024,
+"budsjett_type": "statsbudsjett",
+"departement": "Kunnskapsdepartementet",
+"programområde": "Forskning",
+"kapittel": "285",
+"post": "52",
+"navn": "Forskningsrådet",
+"bevilgning": 3800000000
+},
+
+{
+"år": 2024,
+"budsjett_type": "statsbudsjett",
+"departement": "Helse- og omsorgsdepartementet",
+"programområde": "Folkehelse",
+"kapittel": "714",
+"post": "21",
+"navn": "Folkehelsetiltak",
+"bevilgning": 1200000000
+}
+]

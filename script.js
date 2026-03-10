@@ -5,6 +5,40 @@ return await response.json()
 
 }
 
+
+
+function populateFilters(data){
+
+const years = [...new Set(data.map(d => d.år))].sort()
+const departments = [...new Set(data.map(d => d.departement))].sort()
+
+const yearSelect = document.getElementById("yearFilter")
+const deptSelect = document.getElementById("deptFilter")
+
+years.forEach(year => {
+
+const option = document.createElement("option")
+option.value = year
+option.textContent = year
+
+yearSelect.appendChild(option)
+
+})
+
+departments.forEach(dep => {
+
+const option = document.createElement("option")
+option.value = dep
+option.textContent = dep
+
+deptSelect.appendChild(option)
+
+})
+
+}
+
+
+
 function groupByDepartment(data){
 
 const result={}
@@ -23,37 +57,47 @@ return result
 
 }
 
+
+
 function biggestChanges(data){
 
 const sorted=[...data]
 
 .sort((a,b)=>b.utgifter_mrd-a.utgifter_mrd)
-
 .slice(0,10)
 
-const labels=sorted.map(d=>d.departement)
-const values=sorted.map(d=>d.utgifter_mrd)
+return {
 
-return {labels,values}
+labels:sorted.map(d=>d.departement),
+values:sorted.map(d=>d.utgifter_mrd)
 
 }
+
+}
+
+
 
 function biggestCuts(data){
 
 const sorted=[...data]
 
 .sort((a,b)=>a.utgifter_mrd-b.utgifter_mrd)
-
 .slice(0,10)
 
-const labels=sorted.map(d=>d.departement)
-const values=sorted.map(d=>d.utgifter_mrd)
+return {
 
-return {labels,values}
+labels:sorted.map(d=>d.departement),
+values:sorted.map(d=>d.utgifter_mrd)
 
 }
 
+}
+
+
+
 let currentChart
+
+
 
 function renderChart(type,data){
 
@@ -83,6 +127,8 @@ data:Object.values(grouped)
 
 }
 
+
+
 if(type==="increase"){
 
 const result=biggestChanges(data)
@@ -102,6 +148,8 @@ data:result.values
 })
 
 }
+
+
 
 if(type==="cut"){
 
@@ -125,9 +173,13 @@ data:result.values
 
 }
 
+
+
 async function init(){
 
 const data=await loadData()
+
+populateFilters(data)
 
 renderChart("dept",data)
 
@@ -140,6 +192,8 @@ renderChart(e.target.value,data)
 })
 
 }
+
+
 
 init()
 
@@ -177,5 +231,7 @@ table.innerHTML += row
 })
 
 }
+
+
 
 window.addEventListener("DOMContentLoaded", loadInnspill)

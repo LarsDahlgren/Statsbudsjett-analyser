@@ -1,15 +1,7 @@
 async function loadData() {
 
 const response = await fetch("data/budsjettdata.json")
-const data = await response.json()
-
-return data
-
-}
-
-function getDepartments(data){
-
-return [...new Set(data.map(d => d.departement))]
+return await response.json()
 
 }
 
@@ -20,9 +12,7 @@ const result={}
 data.forEach(row=>{
 
 if(!result[row.departement]){
-
 result[row.departement]=0
-
 }
 
 result[row.departement]+=row.utgifter_mrd
@@ -33,77 +23,105 @@ return result
 
 }
 
-function groupByYear(data, department){
+function biggestChanges(data){
 
-const result={}
+const sorted=[...data]
 
-data
-.filter(d => d.departement === department)
-.forEach(row=>{
+.sort((a,b)=>b.utgifter_mrd-a.utgifter_mrd)
 
-result[row.år]=row.utgifter_mrd
+.slice(0,10)
 
-})
+const labels=sorted.map(d=>d.departement)
+const values=sorted.map(d=>d.utgifter_mrd)
 
-return result
+return {labels,values}
 
 }
 
-function drawDepartmentChart(grouped){
+function biggestCuts(data){
 
-const ctx=document.getElementById("deptChart")
+const sorted=[...data]
 
-new Chart(ctx,{
+.sort((a,b)=>a.utgifter_mrd-b.utgifter_mrd)
+
+.slice(0,10)
+
+const labels=sorted.map(d=>d.departement)
+const values=sorted.map(d=>d.utgifter_mrd)
+
+return {labels,values}
+
+}
+
+let currentChart
+
+function renderChart(type,data){
+
+const ctx=document.getElementById("mainChart")
+
+if(currentChart){
+currentChart.destroy()
+}
+
+if(type==="dept"){
+
+const grouped=groupByDepartment(data)
+
+currentChart=new Chart(ctx,{
 
 type:"bar",
 
 data:{
-
 labels:Object.keys(grouped),
-
 datasets:[{
-
 label:"Totale utgifter (mrd kr)",
-
 data:Object.values(grouped)
-
 }]
-
 }
 
 })
 
 }
 
-function drawTimeSeries(data,department){
+if(type==="increase"){
 
-const grouped=groupByYear(data,department)
+const result=biggestChanges(data)
 
-const canvas=document.createElement("canvas")
+currentChart=new Chart(ctx,{
 
-document.querySelector(".dashboard").appendChild(canvas)
-
-new Chart(canvas,{
-
-type:"line",
+type:"bar",
 
 data:{
-
-labels:Object.keys(grouped),
-
+labels:result.labels,
 datasets:[{
-
-label:department + " utvikling",
-
-data:Object.values(grouped),
-
-fill:false
-
+label:"Største økninger",
+data:result.values
 }]
-
 }
 
 })
+
+}
+
+if(type==="cut"){
+
+const result=biggestCuts(data)
+
+currentChart=new Chart(ctx,{
+
+type:"bar",
+
+data:{
+labels:result.labels,
+datasets:[{
+label:"Største kutt",
+data:result.values
+}]
+}
+
+})
+
+}
 
 }
 
@@ -111,21 +129,21 @@ async function init(){
 
 const data=await loadData()
 
-const grouped=groupByDepartment(data)
+renderChart("dept",data)
 
-drawDepartmentChart(grouped)
+document
+.getElementById("chartSelector")
+.addEventListener("change",(e)=>{
 
-const departments=getDepartments(data)
-
-departments.forEach(dep => {
-
-drawTimeSeries(data,dep)
+renderChart(e.target.value,data)
 
 })
 
 }
 
 init()
+
+
 
 async function loadInnspill(){
 

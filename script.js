@@ -126,3 +126,38 @@ drawTimeSeries(data,dep)
 }
 
 init()
+
+async function loadInnspill(){
+
+const response = await fetch("data/innspill.json")
+const data = await response.json()
+
+const table = document.querySelector("#innspillTable tbody")
+
+data.forEach(item => {
+
+let status = "Ingen gjennomslag"
+
+if(item.budsjett_mill >= item.innspill_mill){
+status = "Fullt gjennomslag"
+}
+else if(item.budsjett_mill > 0){
+status = "Delvis gjennomslag"
+}
+
+const row = `
+<tr>
+<td>${item.sak}</td>
+<td>${item.innspill_mill}</td>
+<td>${item.budsjett_mill}</td>
+<td>${status}</td>
+</tr>
+`
+
+table.innerHTML += row
+
+})
+
+}
+
+loadInnspill()

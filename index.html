@@ -3,6 +3,7 @@
 
 <head>
 <meta charset="UTF-8">
+
 <title>Statsbudsjettanalyse – Kreftforeningen</title>
 
 <link rel="stylesheet" href="style.css">
@@ -25,6 +26,7 @@ Analyse vises i nominelle kroner (ikke inflasjonsjustert)
 
 </header>
 
+
 <!-- Endringer fra i fjor -->
 
 <section>
@@ -34,6 +36,7 @@ Analyse vises i nominelle kroner (ikke inflasjonsjustert)
 <table id="changesTable">
 
 <thead>
+
 <tr>
 <th>Departement</th>
 <th>2025</th>
@@ -41,6 +44,7 @@ Analyse vises i nominelle kroner (ikke inflasjonsjustert)
 <th>Endring</th>
 <th>%</th>
 </tr>
+
 </thead>
 
 <tbody>
@@ -49,6 +53,8 @@ Analyse vises i nominelle kroner (ikke inflasjonsjustert)
 </table>
 
 </section>
+
+
 
 <!-- Filter -->
 
@@ -72,35 +78,33 @@ Analyse vises i nominelle kroner (ikke inflasjonsjustert)
 
 </section>
 
-<!-- Dashboard -->
+
+
+<!-- Budsjettanalyse -->
 
 <section class="dashboard">
 
-<div class="chart-box">
+<h2>Budsjettanalyse</h2>
 
-<h3>Utgifter per departement</h3>
+<label>Velg analyse</label>
 
-<canvas id="deptChart"></canvas>
+<select id="chartSelector">
 
-</div>
+<option value="dept">Utgifter per departement</option>
+<option value="increase">Største økninger</option>
+<option value="cut">Største kutt</option>
 
-<div class="chart-box">
-
-<h3>Største økninger</h3>
-
-<canvas id="increaseChart"></canvas>
-
-</div>
+</select>
 
 <div class="chart-box">
 
-<h3>Største kutt</h3>
-
-<canvas id="cutChart"></canvas>
+<canvas id="mainChart"></canvas>
 
 </div>
 
 </section>
+
+
 
 <!-- Automatisk innsikt -->
 
@@ -111,6 +115,8 @@ Analyse vises i nominelle kroner (ikke inflasjonsjustert)
 <ul id="insightList"></ul>
 
 </section>
+
+
 
 <!-- Kreftforeningens innspill -->
 
@@ -139,6 +145,8 @@ Analyse vises i nominelle kroner (ikke inflasjonsjustert)
 </table>
 
 </section>
+
+
 
 <script src="script.js"></script>
 

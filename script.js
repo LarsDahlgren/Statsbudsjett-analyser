@@ -7,17 +7,25 @@ return data
 
 }
 
-function groupByDepartment(data) {
+function getDepartments(data){
 
-const result = {}
+return [...new Set(data.map(d => d.departement))]
 
-data.forEach(row => {
-
-if (!result[row.departement]) {
-result[row.departement] = 0
 }
 
-result[row.departement] += row.bevilgning
+function groupByDepartment(data){
+
+const result={}
+
+data.forEach(row=>{
+
+if(!result[row.departement]){
+
+result[row.departement]=0
+
+}
+
+result[row.departement]+=row.utgifter_mrd
 
 })
 
@@ -25,20 +33,40 @@ return result
 
 }
 
-function drawDeptChart(grouped) {
+function groupByYear(data, department){
 
-const ctx = document.getElementById("deptChart")
+const result={}
 
-new Chart(ctx, {
+data
+.filter(d => d.departement === department)
+.forEach(row=>{
 
-type: "bar",
+result[row.år]=row.utgifter_mrd
 
-data: {
-labels: Object.keys(grouped),
+})
 
-datasets: [{
-label: "Budsjett per departement",
-data: Object.values(grouped)
+return result
+
+}
+
+function drawDepartmentChart(grouped){
+
+const ctx=document.getElementById("deptChart")
+
+new Chart(ctx,{
+
+type:"bar",
+
+data:{
+
+labels:Object.keys(grouped),
+
+datasets:[{
+
+label:"Totale utgifter (mrd kr)",
+
+data:Object.values(grouped)
+
 }]
 
 }
@@ -47,31 +75,53 @@ data: Object.values(grouped)
 
 }
 
-function createInsights(data) {
+function drawTimeSeries(data,department){
 
-const sorted = [...data].sort((a,b) => b.bevilgning - a.bevilgning)
+const grouped=groupByYear(data,department)
 
-const largest = sorted[0]
+const canvas=document.createElement("canvas")
 
-const insightList = document.getElementById("insightList")
+document.querySelector(".dashboard").appendChild(canvas)
 
-let li = document.createElement("li")
+new Chart(canvas,{
 
-li.innerText = "Største budsjettpost er " + largest.navn
+type:"line",
 
-insightList.appendChild(li)
+data:{
+
+labels:Object.keys(grouped),
+
+datasets:[{
+
+label:department + " utvikling",
+
+data:Object.values(grouped),
+
+fill:false
+
+}]
 
 }
 
-async function init() {
+})
 
-const data = await loadData()
+}
 
-const grouped = groupByDepartment(data)
+async function init(){
 
-drawDeptChart(grouped)
+const data=await loadData()
 
-createInsights(data)
+const grouped=groupByDepartment(data)
+
+drawDepartmentChart(grouped)
+
+const departments=getDepartments(data)
+
+departments.forEach(dep => {
+
+drawTimeSeries(data,dep)
+
+})
 
 }
 

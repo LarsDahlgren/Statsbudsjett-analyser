@@ -1,43 +1,45 @@
 body {
 font-family: Arial, sans-serif;
 margin: 0;
-background: #f4f6f8;
-color: #333;
+background: #ffffff;
+color: #000;
 }
 
 header {
-background: #1f3c88;
-color: white;
-padding: 20px;
+text-align: center;
+padding: 40px 20px;
+border-bottom: 1px solid #eee;
 }
 
 header h1 {
+font-size: 32px;
+letter-spacing: 1px;
 margin: 0;
 }
 
-.warning {
-background: #ffdede;
-color: #600;
-padding: 10px;
+header p {
+color: #555;
 margin-top: 10px;
-border-radius: 4px;
+}
+
+.warning {
+background: #f5f5f5;
+padding: 10px;
+margin-top: 20px;
+display: inline-block;
 }
 
 h2 {
-margin: 20px;
+margin: 40px 20px 10px 20px;
+font-size: 24px;
 }
 
 .filters {
 padding: 20px;
-background: white;
 display: flex;
 gap: 20px;
 flex-wrap: wrap;
-border-bottom: 1px solid #ddd;
-}
-
-.filters label {
-font-weight: bold;
+border-bottom: 1px solid #eee;
 }
 
 .filters select {
@@ -47,15 +49,13 @@ padding: 6px;
 .dashboard {
 display: grid;
 grid-template-columns: 1fr 1fr;
-gap: 20px;
+gap: 30px;
 padding: 20px;
 }
 
 .chart-box {
-background: white;
 padding: 20px;
-border-radius: 8px;
-box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+border: 1px solid #eee;
 }
 
 .chart-box h3 {
@@ -64,46 +64,39 @@ margin-top: 0;
 
 .insights {
 padding: 20px;
-background: white;
-margin: 20px;
-border-radius: 8px;
-box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+border-top: 1px solid #eee;
 }
 
 table {
 border-collapse: collapse;
 margin: 20px;
-background: white;
 width: calc(100% - 40px);
-box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
 th {
-background: #1f3c88;
+background: #00ABC2;
 color: white;
-text-align: left;
 padding: 10px;
+text-align: left;
 }
 
 td {
-border: 1px solid #ddd;
-padding: 8px;
+border-bottom: 1px solid #eee;
+padding: 10px;
 }
 
 tr:nth-child(even) {
-background: #f7f7f7;
+background: #f8f8f8;
 }
 
 button {
-background: #1f3c88;
+background: #00ABC2;
 color: white;
 border: none;
 padding: 10px 16px;
-border-radius: 6px;
 cursor: pointer;
-margin: 20px;
 }
 
 button:hover {
-background: #162d66;
+background: #008fa3;
 }

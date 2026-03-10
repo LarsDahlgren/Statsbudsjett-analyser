@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>Statsbudsjett Analyse</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<header>
+<h1>Statsbudsjett-analyse</h1>
+<p>Analyse av Prop. 1 S og Revidert nasjonalbudsjett</p>
+
+<div class="warning">
+Analyse vises i nominelle kroner (ikke inflasjonsjustert)
+</div>
+</header>
+
+<section class="filters">
+
+<label>År</label>
+<select id="yearFilter"></select>
+
+<label>Departement</label>
+<select id="deptFilter"></select>
+
+<label>Budsjett</label>
+<select id="budgetFilter">
+<option value="all">Alle</option>
+<option value="statsbudsjett">Statsbudsjett</option>
+<option value="RNB">RNB</option>
+</select>
+
+</section>
+
+<section class="dashboard">
+
+<div class="chart-box">
+<h3>Utgifter per departement</h3>
+<canvas id="deptChart"></canvas>
+</div>
+
+<div class="chart-box">
+<h3>Største økninger</h3>
+<canvas id="increaseChart"></canvas>
+</div>
+
+<div class="chart-box">
+<h3>Største kutt</h3>
+<canvas id="cutChart"></canvas>
+</div>
+
+</section>
+
+<section class="insights">
+
+<h2>Automatisk innsikt</h2>
+
+<ul id="insightList"></ul>
+
+</section>
+
+<script src="script.js"></script>
+
+</body>
+</html>

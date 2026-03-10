@@ -160,4 +160,4 @@ table.innerHTML += row
 
 }
 
-loadInnspill()
+window.addEventListener("DOMContentLoaded", loadInnspill)
